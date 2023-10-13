@@ -1,0 +1,1 @@
+Use kubectl command to involve "MutatingAdmissionWebhook" to intercept requests and modify headers for deployment “web”, namespace “robot-shop” and k8s_nodes and display the deployment details in JSON format.

@@ -1,0 +1,45 @@
+---
+- name: Implement resource management techniques playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Store deployment details in variables
+      set_fact:
+        deployment_name: "web"
+        name_space: "robot-shop"
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+
+    - name: Set resource limits/requests
+      shell: |
+        kubectl set resources deployment {{ deployment_name }} --limits=cpu=200m,memory=512Mi --requests=cpu=100m,memory=256Mi -n {{ name_space }}
+      register: var_3
+
+    - name: Set Quality of Service (QoS) classes
+      shell: |
+        kubectl patch deployment {{ deployment_name }} -n {{ name_space }} -p '{"spec":{"template":{"metadata":{"annotations":{"scheduler.alpha.kubernetes.io/qosClass":"burstable"}}}}}'
+      register: var_4
+
+    - name: Set node affinity
+      shell: |
+        kubectl patch deployment {{ deployment_name }} -n {{ name_space }} -p '{"spec":{"template":{"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"beta.kubernetes.io/os","operator":"In","values":["linux"]}]}]}}}}}}}'
+      register: var_5
+
+    - name: Display deployment details
+      debug:
+        var: var_2.stdout
+
+    - name: Display resource limits/requests
+      debug:
+        msg: "Resource limits and requests set for deployment {{ deployment_name }}"
+
+    - name: Display QoS classes
+      debug:
+        msg: "QoS classes set for deployment {{ deployment_name }}"
+
+    - name: Display node affinity
+      debug:
+        msg: "Node affinity set for deployment {{ deployment_name }}"

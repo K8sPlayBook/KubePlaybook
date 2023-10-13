@@ -1,0 +1,29 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Set deployment name and namespace
+      set_fact:
+        deployment_name: "web"
+        name_space: "robot-shop"
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+
+    - name: Check if MutatingAdmissionWebhook is enabled
+      shell: |
+        kubectl api-versions | grep admissionregistration.k8s.io/v1
+      register: var_8
+      ignore_errors: true
+
+    - name: Ensure MutatingAdmissionWebhook is enabled
+      fail:
+        msg: "MutatingAdmissionWebhook is not enabled."
+      when: "'admissionregistration.k8s.io/v1' not in var_8.stdout"
+
+    - name: Display deployment details
+      debug:
+        var: var_2.stdout

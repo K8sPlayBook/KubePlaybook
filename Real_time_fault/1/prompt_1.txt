@@ -1,0 +1,1 @@
+Use kubectl command to Check CoreDNS Pods and Verify Pod DNS Configuration for deployment “web”, namespace “robot-shop” and k8s_nodes and display the deployment details in JSON format.

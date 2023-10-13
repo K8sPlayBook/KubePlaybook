@@ -1,0 +1,36 @@
+---
+- name: Optimize the number of containers per pod and utilize resource requests and limits effectively playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Store deployment details in variables
+      set_fact:
+        deployment_name: "web"
+        name_space: "robot-shop"
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+
+    - name: Set resource limits/requests
+      shell: |
+        kubectl set resources deployment {{ deployment_name }} --limits=cpu=200m,memory=512Mi --requests=cpu=100m,memory=256Mi -n {{ name_space }}
+      register: var_3
+
+    - name: Scale down the number of pods
+      shell: |
+        kubectl scale deployment {{ deployment_name }} --replicas=2 -n {{ name_space }}
+      register: var_4
+
+    - name: Display deployment details
+      debug:
+        var: var_2.stdout
+
+    - name: Display resource limits/requests
+      debug:
+        msg: "Resource limits and requests set for deployment {{ deployment_name }}"
+
+    - name: Display number of pods
+      debug:
+        msg: "Number of pods scaled down for deployment {{ deployment_name }}"

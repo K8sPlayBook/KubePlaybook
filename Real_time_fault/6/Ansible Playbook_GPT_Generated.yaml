@@ -1,0 +1,26 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Set deployment name and namespace
+      set_fact:
+        deployment_name: "web"
+        name_space: "robot-shop"
+
+    - name: Increase resources
+      shell: |
+        kubectl patch deployment {{ deployment_name }} --namespace {{ name_space }} --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/resources/limits/cpu", "value":"2"}, {"op": "add", "path": "/spec/template/spec/containers/0/resources/limits/memory", "value":"512Mi"}]'
+
+    - name: Implement Horizontal Pod Autoscaling
+      shell: |
+        kubectl autoscale deployment {{ deployment_name }} --namespace {{ name_space }} --min=1 --max=10 --cpu-percent=80
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+
+    - name: Display deployment details
+      debug:
+        var: var_2.stdout

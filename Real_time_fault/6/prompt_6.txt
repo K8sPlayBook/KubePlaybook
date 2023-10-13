@@ -1,0 +1,1 @@
+Use kubectl command to iinvolve identifying and addressing memory-intensive pods or applications, optimizing resource requests and limits, implementing Horizontal Pod Autoscaling for deployment “web”, namespace “robot-shop” and k8s_nodes and display the deployment details in JSON format.

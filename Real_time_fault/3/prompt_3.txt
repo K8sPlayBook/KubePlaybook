@@ -1,0 +1,1 @@
+Use kubectl command to implement resource management techniques such as Quality of Service (QoS) classes, node affinity/anti-affinity, and resource limits/requests to optimize and control I/O usage on nodes for deployment “web”, namespace “robot-shop” and k8s_nodes and display the deployment details in JSON format.

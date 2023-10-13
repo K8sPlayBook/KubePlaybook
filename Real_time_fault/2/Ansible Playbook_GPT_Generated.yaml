@@ -1,0 +1,36 @@
+---
+- name: Ensure proper configuration of CoreDNS playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Store deployment details in variables
+      set_fact:
+        deployment_name: "web"
+        name_space: "robot-shop"
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+
+    - name: Check CoreDNS Pods
+      shell: |
+        kubectl get pods -n kube-system -l k8s-app=kube-dns
+      register: var_3
+
+    - name: Check CoreDNS Configuration
+      shell: |
+        kubectl describe configmap coredns -n kube-system
+      register: var_4
+
+    - name: Display deployment details
+      debug:
+        var: var_2.stdout
+
+    - name: Display CoreDNS Pods
+      debug:
+        var: var_3.stdout
+
+    - name: Display CoreDNS Configuration
+      debug:
+        var: var_4.stdout

@@ -1,0 +1,1 @@
+Use kubectl command to to ensure proper configuration of CoreDNS, the default DNS server in Kubernetes .for deployment “web”, namespace “robot-shop” and k8s_nodes and display the deployment details in JSON format.

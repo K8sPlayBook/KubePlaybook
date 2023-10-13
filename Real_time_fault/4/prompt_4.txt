@@ -1,0 +1,1 @@
+Use kubectl command to Optimize the number of containers per pod and utilize resource requests and limits effectively for deployment “web”, namespace “robot-shop” and k8s_nodes and display the deployment details in JSON format.
