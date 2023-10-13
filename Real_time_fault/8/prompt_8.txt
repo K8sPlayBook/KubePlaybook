@@ -1,0 +1,1 @@
+Use kubectl command to check the current replica for the deployment "ratings" and  Increase replica count by one if current replica count is 3, otherwise decrease by one for the deployment "ratings", namespace "robot-shop" and k8s_nodes and display the deployment details in JSON.
