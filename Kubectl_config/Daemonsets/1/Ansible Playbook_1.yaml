@@ -1,0 +1,20 @@
+---
+- name: Get Deployments with "web" in their name
+  hosts: k8s_nodes
+  tasks:
+    - name: Get all deployments with "web" in their name
+      shell: |
+        kubectl get deployments --all-namespaces | grep web | awk '{print $1 "," $2}'
+      register: var_1
+    - name: Store deployment details in variables
+      set_fact:
+        deployment_name: "{{ item.split(',')[1] }}"
+        name_space: "{{ item.split(',')[0] }}"
+      with_items: "{{ var_1.stdout_lines }}"
+    - name: Get daemon sets
+      shell: |
+        kubectl get daemonset
+      register: var_2
+    - name: Display result in json format
+      debug:
+        var: var_2

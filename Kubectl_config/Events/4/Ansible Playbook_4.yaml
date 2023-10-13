@@ -1,0 +1,28 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment list with "web"
+      shell: |
+        kubectl get deployments --all-namespaces | grep web | awk '{print $1 , $2}'
+      register: var_1
+    - name: Split deployment name and namespace
+      set_fact:
+        deployment_name: "{{ var_1.stdout_lines[0].split()[1] }}"
+        name_space: "{{ var_1.stdout_lines[0].split()[0] }}"
+      when: "'web' in var_1.stdout"
+    - name: Get node details
+      command: |
+        kubectl get nodes -o wide
+      register: var_2
+    - name: Store node name in a variable
+      set_fact:
+        node_name: "{{ var_2.stdout_lines[0].split()[1] }}"
+    - name: List recent events for a node
+      command: |
+        kubectl get events --field-selector involvedObject.kind=Node,involvedObject.name={{ node_name }}
+      register: var_3
+    - name: Display result
+      debug:
+        var: var_3.stdout

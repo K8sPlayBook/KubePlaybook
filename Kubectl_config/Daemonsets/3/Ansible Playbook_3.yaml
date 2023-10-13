@@ -1,0 +1,18 @@
+---
+- name: K8s deployment delete playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment list with "web"
+      shell: |
+        kubectl get deployments --all-namespaces | awk '{print $1,$2}' | grep web
+      register: var_1
+    - name: Split deployment name and namespace
+      set_fact:
+        deployment_name: "{{ var_1.stdout_lines[0].split()[1] }}"
+        name_space: "{{ var_1.stdout_lines[0].split()[0] }}"
+      when: "'web' in var_1.stdout"
+    - name: Delete daemonset for the deployment
+      shell: |
+        kubectl delete daemonset {{ deployment_name }} --namespace {{ name_space }}
+      when: "'web' in var_1.stdout"

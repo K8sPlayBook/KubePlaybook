@@ -1,0 +1,27 @@
+---
+- name: Get Deployments with "web" in their name
+  hosts: k8s_nodes
+  tasks:
+    - name: Get all deployments with "web" in their name
+      shell: |
+        kubectl get deployments --all-namespaces | grep web | awk '{print $1 "," $2}'
+      register: var_1
+    - name: Store deployment details in variables
+      set_fact:
+        deployment_name: "{{ item.split(',')[1] }}"
+        name_space: "{{ item.split(',')[0] }}"
+      with_items: "{{ var_1.stdout_lines }}"
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment {{ deployment_name }} -n {{ name_space }} -o json
+    - name: Get pods sorted by restart count
+      shell: |
+        kubectl get pods -n {{ name_space }} --sort-by={.status.containerStatuses[0].restartCount}
+    - name: Display result in json format
+      debug:
+        var:
+          res_json: "{{ var_1 }}"
+          deployment_name: "{{ deployment_name }}"
+    - name: Display the detailed state of one or more deployments
+      shell: |
+        kubectl describe deployment
