@@ -1,0 +1,24 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get current replicas for "ratings" deployment
+      shell: |
+        kubectl get deployment ratings -n robot-shop -o jsonpath='{.spec.replicas}'
+      register: current_replicas
+
+    - name: Increase replica count by one
+      shell: |
+        kubectl scale --replicas=$(({{ current_replicas.stdout }} + 1)) deployment ratings -n robot-shop
+      register: updated_replicas
+
+    - name: Get updated deployment details
+      command: |
+        kubectl get deployment ratings -n robot-shop -o json
+      register: updated_deployment
+
+    - name: Display updated deployment details
+      debug:
+        var: updated_deployment.stdout
+
