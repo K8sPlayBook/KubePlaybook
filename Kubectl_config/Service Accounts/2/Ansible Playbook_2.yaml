@@ -1,0 +1,32 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment list with "web"
+      shell: |
+        kubectl get deployments --all-namespaces | awk '{print $1,$2}' | grep web
+      register: var_1
+    - name: Split deployment name and namespace
+      set_fact:
+        deployment_name: "{{ var_1.stdout_lines[0].split()[1] }}"
+        name_space: "{{ var_1.stdout_lines[0].split()[0] }}"
+      when: "'web' in var_1.stdout"
+      
+    - name: Get the name of a pod for the deployment
+      shell: |
+        kubectl get pods --namespace {{ name_space }} | awk '{print $1}' | grep web
+      register: var_2
+    - name: Get service account name
+      shell: |
+        kubectl get serviceaccount -n {{ name_space }} | awk '{print $1}' | grep my
+      register: var_3
+    
+    - name: Replace the label for service account for the deployment defined
+      shell: |
+        kubectl patch serviceaccount {{var_3.stdout}} -n {{name_space}} --patch '{"metadata": {"labels": {"env": "test"}}}'
+      register: var_4
+      when: "'my' in var_3.stdout"
+    - name: Display updated deployment details
+      debug:
+        var: var_4.stdout

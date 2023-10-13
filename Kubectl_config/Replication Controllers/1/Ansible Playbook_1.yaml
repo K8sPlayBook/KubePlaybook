@@ -1,0 +1,28 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment list with "web"
+      shell: |
+        kubectl get deployments --all-namespaces | awk '{print $1,$2}' | grep web
+      register: var_1
+    - name: Split deployment name and namespace
+      set_fact:
+        deployment_name: "{{ var_1.stdout_lines[0].split()[1] }}"
+        name_space: "{{ var_1.stdout_lines[0].split()[0] }}"
+      when: "'web' in var_1.stdout"
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+    - name: List the replication controllers for the deployment defined
+      shell: |
+        kubectl get rc --namespace {{ name_space }}
+      register: var_3
+    - name: Save the result
+      set_fact:
+        replication_controllers: "{{ var_3.stdout_lines }}"
+    - name: Display updated deployment details
+      debug:
+        var: replication_controllers
