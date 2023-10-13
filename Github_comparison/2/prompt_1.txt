@@ -1,0 +1,1 @@
+Run kubectl command to Scale replicaset for deployment and namespace  defined and display the result in json file and  var_2 variable.

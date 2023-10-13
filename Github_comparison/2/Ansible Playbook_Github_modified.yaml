@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+
+  vars:
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    replicas: 1
+
+
+  tasks:
+    - name: Scale replicaset
+      shell: |
+        kubectl scale --replicas={{ replicas }} deployment web --namespace robot-shop
+      register: var_3

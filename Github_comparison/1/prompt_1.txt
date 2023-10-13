@@ -1,0 +1,1 @@
+Run ansible command to pause Pause for job to complete for 5 seconds and use kubectl to get ‘my-job’ Job info in JSON format for namespace ‘robot-shop’ and assert that 'my-job' Job is ready and display the result

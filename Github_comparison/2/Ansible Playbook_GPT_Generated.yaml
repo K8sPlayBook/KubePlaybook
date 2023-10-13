@@ -1,0 +1,42 @@
+---
+- name: K8s deployment scale playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment list with "web"
+      shell: |
+        kubectl get deployments --all-namespaces | awk '{print $1,$2}' | grep web
+      register: var_1
+
+
+    - name: Split deployment name and namespace
+      set_fact:
+        deployment_name: "{{ var_1.stdout_lines[0].split()[1] }}"
+        name_space: "{{ var_1.stdout_lines[0].split()[0] }}"
+      when: "'web' in var_1.stdout"
+
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+
+
+    - name: Scale replicaset for deployment and namespace
+      shell: |
+        kubectl scale deploy {{ deployment_name }} --replicas=3 --namespace {{ name_space }}
+      when: "'web' in var_1.stdout"
+
+
+    - name: Get updated deployment details
+      command: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_3
+
+
+    - name: Display updated deployment details
+      debug:
+        var:
+          res_json: "{{ var_3 }}"
+          deployment_name: "{{ deployment_name }}"
+          name_space: "{{ name_space }}"

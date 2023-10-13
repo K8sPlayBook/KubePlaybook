@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Ensure ~/K8s/README.md exists
+      stat:
+        path: "~/K8s/README.md"
+      register: stat_result
+
+    - name: Fail if ~/K8s/README.md doesn't exist
+      fail:
+        msg: "File ~/K8s/README.md doesn't exist."
+      when: stat_result.stat.exists == False
+
+    - name: Copy ~/K8s/README.md to ~/.kube/
+      copy:
+        src: "~/K8s/README.md"
+        dest: "~/.kube/"
+        remote_src: yes
+      register: copy_result
+      when: stat_result.stat.exists
+
+    - name: Display Result
+      debug:
+        var: copy_result

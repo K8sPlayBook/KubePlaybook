@@ -1,0 +1,18 @@
+---
+- hosts: k8s-masters[0]
+  become: yes
+  vars:
+    upgrade_version: v1.9.6
+    kubeadm_version: latest
+  ignore_errors: yes
+  roles:
+    - kubeadm-upgrade
+
+- hosts: all
+  serial: 1
+  become: yes
+  vars:
+    kubelet_version: latest
+  roles:
+    - update-kubelet
+

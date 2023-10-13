@@ -1,0 +1,1 @@
+Create an ansible playbook to ensure that “~/K8s/README.md” file exists and Copy the file into ~/.kube/  and display the result.

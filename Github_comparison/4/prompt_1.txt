@@ -1,0 +1,1 @@
+Create ansible playbook to Ping “hello” message to all servers, and print the result.

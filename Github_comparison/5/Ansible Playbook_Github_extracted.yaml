@@ -1,0 +1,15 @@
+---
+- hosts: k8s_nodes
+  tasks:
+    - name: Ensure .kube folder exist
+      file:
+        path: ~/.kube
+        state: directory
+
+
+    - name: Copy admin.conf to into ~/.kube/
+      copy:
+        src: /home/ubuntu/robot-shop/K8s/README.md
+        dest: ~/.kube/config1
+        remote_src: yes
+        mode: '0600'

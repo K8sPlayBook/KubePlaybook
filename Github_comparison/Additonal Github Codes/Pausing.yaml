@@ -1,0 +1,17 @@
+---
+- name: Pausing for 1 minute
+  pause:
+    minutes: 1
+    
+- replace:
+    path: /etc/kubernetes/kubelet.conf
+    regexp: 'server:.*'
+    replace: "server: https://localhost:{{ha_proxy_port}}"
+    backup: no
+
+- name: restart kubelet
+  systemd: 
+    name: kubelet 
+    daemon_reload: yes
+    state: restarted
+    enabled: yes

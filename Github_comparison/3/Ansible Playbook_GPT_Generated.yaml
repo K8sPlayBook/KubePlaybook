@@ -1,0 +1,12 @@
+---
+- name: Get Current Date
+  hosts: k8s_nodes
+  tasks:
+    - name: Get Current Date
+      shell: date
+      register: var_1
+
+
+    - name: Display result
+      debug:
+        var: var_1

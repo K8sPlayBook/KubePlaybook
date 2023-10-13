@@ -1,0 +1,9 @@
+---
+- hosts: k8s-masters
+  become: yes
+  roles:
+    - pull-kubernetes-images
+    - kubeadm-init-prep
+    - { role: kubeadm-init-first-master, when: "groups['k8s-masters'][0] == inventory_hostname"}
+    - { role: kubeadm-init-other-masters, when: "groups['k8s-masters'][0] != inventory_hostname" }
+    - { role: flannel, when: "groups['k8s-masters'][0] == inventory_hostname"}

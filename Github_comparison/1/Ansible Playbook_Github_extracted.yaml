@@ -1,0 +1,24 @@
+---
+- name: K8s job update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Pause for job to complete
+      pause:
+        seconds: 5
+
+
+    - name: Get my-job Job info
+      shell: |
+        kubectl get job my-job -n robot-shop -o json
+      register: var_1
+
+
+    - name: Assert that 'my-job' Job is ready
+      assert:
+        that: var_1.stdout.find("ready") != -1
+
+
+    - name: Display result
+      debug:
+        var: var_1.stdout

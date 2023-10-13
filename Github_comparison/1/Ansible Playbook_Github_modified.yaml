@@ -1,0 +1,27 @@
+---
+- name: Verify
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+
+  tasks:
+    - name: Pause for job to complete.
+      ansible.builtin.pause:
+        seconds: 1
+        
+    - name: Get 'hello' Job info.
+      shell: |
+        kubectl get job my-job -n robot-shop -o json
+      register: jobs
+
+
+    - name: Debug.
+      ansible.builtin.debug:
+        var: jobs
+
+
+    - name: Assert that 'hello' Job ran successfully.
+      assert:
+        that:
+          - jobs.stdout | from_json | json_query('status.active') == 1

@@ -1,0 +1,17 @@
+---
+- name: Ping all servers
+  hosts: all
+  tasks:
+    - name: Ping servers
+      ping:
+      register: ping_result
+
+
+    - name: Print hello message
+      debug:
+        msg: "Hello {{ inventory_hostname }}!"
+
+
+    - name: Print ping results
+      debug:
+        var: ping_result
