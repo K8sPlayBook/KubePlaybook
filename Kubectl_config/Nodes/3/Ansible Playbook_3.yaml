@@ -1,0 +1,25 @@
+---
+- name: K8s deployment node create playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment list with "web"
+      shell: |
+        kubectl get deployments --all-namespaces | awk '{print $1,$2}' | grep web
+      register: var_1
+    - name: Split deployment name and namespace
+      set_fact:
+        deployment_name: "{{ var_1.stdout_lines[0].split()[1] }}"
+        name_space: "{{ var_1.stdout_lines[0].split()[0] }}"
+      when: "'web' in var_1.stdout"
+    - name: Create a node or multiple nodes for the deployment
+      shell: |
+        kubectl create node my-node-temp {{ deployment_name }} --namespace {{ name_space }}
+      when: "'web' in var_1.stdout"
+    - name: Get updated deployment details
+      command: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_2
+    - name: Display updated deployment details
+      debug:
+        var: var_2.stdout

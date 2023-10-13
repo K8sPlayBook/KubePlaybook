@@ -1,0 +1,29 @@
+---
+- name: K8s annotate deployment playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment list with "shipping"
+      shell: |
+        kubectl get deployments --all-namespaces | awk '{print $1,$2}' | grep shipping
+      register: var_1
+    - name: Split deployment name and namespace
+      set_fact:
+        deployment_name: "{{ var_1.stdout_lines[0].split()[1] }}"
+        name_space: "{{ var_1.stdout_lines[0].split()[0] }}"
+      when: "'shipping' in var_1.stdout"
+    - name: Get pod list
+      shell: |
+        kubectl get pods --namespace {{ name_space }}
+      register: var_2
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment -o json --namespace {{ name_space }} {{ deployment_name }}
+      register: var_3
+    - name: Annotate node
+      shell: |
+        kubectl annotate node ip-172-30-2-214 test=test1
+      register: var_4
+    - name: Display result in json format
+      debug:
+        var: var_4

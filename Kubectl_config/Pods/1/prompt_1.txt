@@ -1,0 +1,4 @@
+write an ansible playbook that uses k8s_nodes that will do the following instructions:
+1) Get a list of all deployments with 'web' in their name by running a shell command and filtering the results to only show the namespace and deployment name and save them in two variables, 'deployment_name', 'name_space'.
+2) Use kubectl command to list one or more pods for the deployment defined in step 1 by using 'deployment_name', 'name_space' variables.
+3) Use the command module to retrieve and display the deployment details of step 2 in JSON format. The result is stored in the var_2 variable. Then use the debug module to display the contents of the var_2 variable.
