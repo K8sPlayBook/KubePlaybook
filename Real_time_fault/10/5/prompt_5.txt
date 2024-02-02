@@ -1,0 +1,1 @@
+Use kubectl command to check the firewall rules and security groups to ensure that incoming connections from the microservice host's IP address are allowed for deployment ‘web’ and namespace "robot-shop" that use host "k8s_nodes", and display the deployment details in JSON format.

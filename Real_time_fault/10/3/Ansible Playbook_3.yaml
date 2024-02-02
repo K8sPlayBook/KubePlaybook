@@ -1,0 +1,23 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_1
+
+    - name: Check if deployment is configured to accept connections from any IP address
+      shell: |
+        kubectl get service web -n robot-shop -o jsonpath='{.spec.loadBalancerSourceRanges}'
+      register: var_2
+
+    - name: Check if the service is open to the world
+      shell: |
+        if [[ "$(var_2.stdout)" == "0.0.0.0/0" ]]; then echo "The service is open to the world"; else echo "The service is not open to the world"; fi
+      register: var_3
+
+    - name: Display result in JSON format
+      debug:
+        var: var_3.stdout

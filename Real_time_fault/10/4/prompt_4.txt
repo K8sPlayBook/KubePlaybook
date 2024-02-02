@@ -1,0 +1,1 @@
+Use kubectl command to ensure that deployment is configured to listen on the correct port number from any IP address for ‘web’ and namespace "robot-shop" that use host "k8s_nodes", and display the deployment details in JSON format.

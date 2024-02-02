@@ -1,0 +1,1 @@
+Use kubectl command to Check DNS Resolution, If '10.0.3.61' is a hostname rather than an IP address, ensure that DNS resolution is working correctly and the hostname resolves to the correct IP address for deployment ‘web’ and namespace "robot-shop" that use host "k8s_nodes", and display the deployment details in JSON format.

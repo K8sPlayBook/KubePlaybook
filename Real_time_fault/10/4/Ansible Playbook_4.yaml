@@ -1,0 +1,23 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_1
+
+    - name: Ensure that deployment ‘web’ is configured to listen on the correct port number from any IP address
+      shell: |
+        kubectl patch deployment web -n robot-shop -p '{"spec":{"template":{"spec":{"containers":[{"name":"web","livenessProbe":{"httpGet":{"port":80,"host":"0.0.0.0"}}}]}}}}'
+      register: var_2
+
+    - name: Get updated deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_3
+
+    - name: Display updated deployment details
+      debug:
+        var: var_3.stdout

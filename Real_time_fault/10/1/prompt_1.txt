@@ -1,0 +1,1 @@
+Use kubectl command to check the status for deployment ‘web’ and namespace "robot-shop" that use host "k8s_nodes" by logging into the server where the deployment is hosted and check its status, and display the deployment details in JSON format.

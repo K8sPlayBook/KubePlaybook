@@ -1,0 +1,18 @@
+---
+- name: K8s deployment status playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Set deployment name and namespace
+      set_fact:
+        deployment_name: "web"
+        name_space: "robot-shop"
+
+    - name: Check the status of the deployment
+      shell: |
+        kubectl get deployment {{ deployment_name }} -n {{ name_space }} -o json
+      register: var_1
+
+    - name: Display deployment status
+      debug:
+        var: var_1.stdout

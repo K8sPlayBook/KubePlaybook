@@ -1,0 +1,1 @@
+Use kubectl command to check that deployment is configured to accept connections from any IP address for ‘web’ and namespace "robot-shop" that use host "k8s_nodes", and display the deployment details in JSON format.

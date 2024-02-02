@@ -1,0 +1,28 @@
+---
+- name: K8s deployment network playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Set deployment name and namespace
+      set_fact:
+        deployment_name: "web"
+        name_space: "robot-shop"
+
+    - name: Get service details
+      shell: |
+        kubectl get svc {{ deployment_name }} -n {{ name_space }} -o json
+      register: var_1
+
+    - name: Get the IP of the service
+      set_fact:
+        svc_ip: "{{ var_1.json.spec.clusterIP }}"
+
+    - name: Check network connectivity to the service
+      shell: |
+        ping -c 4 {{ svc_ip }}
+      register: var_2
+      ignore_errors: yes
+
+    - name: Display network connectivity status
+      debug:
+        var: var_2.stdout_lines

@@ -1,0 +1,1 @@
+check that deployment is configured to accept connections from any IP address for deployment 

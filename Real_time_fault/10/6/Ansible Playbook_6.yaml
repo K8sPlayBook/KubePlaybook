@@ -1,0 +1,33 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Check if deployment web exists in robot-shop
+      shell: |
+        kubectl get deployment web -n robot-shop
+      register: var_1
+      ignore_errors: yes
+
+    - name: Exit if the deployment doesn't exist
+      fail:
+        msg: "Deployment 'web' does not exist in the namespace 'robot-shop'"
+      when: "'not found' in var_1.stderr"
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_2
+
+    - name: Check DNS Resolution for 10.0.3.61
+      shell: |
+        nslookup 10.0.3.61
+      register: var_3
+
+    - name: Display DNS resolution result
+      debug:
+        var: var_3.stdout
+
+    - name: Display deployment details
+      debug:
+        var: var_2.stdout

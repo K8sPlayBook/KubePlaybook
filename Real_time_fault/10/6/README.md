@@ -1,0 +1,1 @@
+Ensure that DNS resolution is working correctly and the hostname resolves to the correct IP address for deployment
