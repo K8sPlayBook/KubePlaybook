@@ -1,0 +1,1 @@
+Use kubectl command to solve network interruptions for deployment ‘web’ and namespace "robot-shop" that use host "k8s_nodes", and display the deployment details in JSON format.
