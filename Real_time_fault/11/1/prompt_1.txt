@@ -1,0 +1,4 @@
+
+Use the kubectl command to  decrease replica by one  for deployment ‘web’ if memory usage is high for deployment  and namespace "robot-shop" that uses host "k8s_nodes", and displays the deployment details in JSON format.
+
+

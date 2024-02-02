@@ -1,0 +1,1 @@
+Decrease replica by one  for deployment ‘web’ if memory usage is high for deployment
