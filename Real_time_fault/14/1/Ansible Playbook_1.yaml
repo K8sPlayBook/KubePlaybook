@@ -1,0 +1,36 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Check if deployment 'web' exists in namespace 'robot-shop'
+      shell: |
+        kubectl get deployments --namespace=robot-shop | grep web
+      register: var_1
+      ignore_errors: yes
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment web -o json --namespace=robot-shop
+      register: var_2
+      when: "'web' in var_1.stdout"
+
+    - name: Solving misconfiguration by deleting and recreating the service
+      block:
+        - name: Delete service
+          shell: |
+            kubectl delete service web --namespace=robot-shop
+          ignore_errors: yes
+
+        - name: Recreate service
+          shell: |
+            kubectl expose deployment web --type=LoadBalancer --port=80 --namespace=robot-shop
+          ignore_errors: yes
+
+    - name: Get updated deployment details
+      command: |
+        kubectl get deployment web -o json --namespace=robot-shop
+      register: var_4
+   - name: Display updated deployment details
+      debug:
+        var: var_4.stdout
