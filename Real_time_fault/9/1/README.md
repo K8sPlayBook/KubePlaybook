@@ -1,0 +1,1 @@
+increase the maximum number of allowed connections in your MySQL server configuration then restart your MySQL serve.

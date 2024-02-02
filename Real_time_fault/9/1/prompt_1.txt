@@ -1,0 +1,2 @@
+Use kubectl command to increase the maximum number of allowed connections then restart deployment ‘web’ for namespace "robot-shop" that use host "k8s_nodes", and display the deployment details in JSON format.
+

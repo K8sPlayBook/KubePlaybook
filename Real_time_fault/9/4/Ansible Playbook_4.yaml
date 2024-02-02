@@ -1,0 +1,23 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_1
+
+    - name: Update deployment configuration to use connection pooling
+      shell: |
+        kubectl set env deployment/web USE_CONNECTION_POOLING=true -n robot-shop
+      register: var_2
+
+    - name: Get updated deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_3
+
+    - name: Display updated deployment details
+      debug:
+        var: var_3.stdout

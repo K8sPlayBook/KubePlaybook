@@ -1,0 +1,1 @@
+scaling deployment horizontally by adding more services to handle temporary connection failures gracefully if the deployment becomes temporarily unavailable due to connection limits being reached f

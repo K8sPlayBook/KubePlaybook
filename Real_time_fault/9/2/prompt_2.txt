@@ -1,0 +1,1 @@
+Use kubectl command to identify resource-intensive database queries for holding connections open for longer durations for deployment ‘web’ in the namespace "robot-shop" that use host "k8s_nodes" and display the deployment details in JSON format.

@@ -1,0 +1,2 @@
+Use kubectl command to scaling deployment horizontally by adding more services to handle temporary connection failures gracefully if the deployment becomes temporarily unavailable due to connection limits being reached for ‘web’ and namespace "robot-shop" that use host "k8s_nodes", and display the deployment details in JSON format.
+

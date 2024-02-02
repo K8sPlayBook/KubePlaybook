@@ -1,0 +1,28 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_1
+
+    - name: Increase the maximum number of allowed connections
+      shell: |
+        kubectl patch deployment web -n robot-shop --type='json' -p='[{"op": "replace", "path": "/spec/template/spec/containers/0/env/0/value", "value":"500"}]'
+      register: var_2
+
+    - name: Restart the deployment
+      shell: |
+        kubectl rollout restart deployment/web -n robot-shop
+      register: var_3
+
+    - name: Get updated deployment details
+      shell: |
+        kubectl get deployment web -n robot-shop -o json
+      register: var_4
+
+    - name: Display updated deployment details
+      debug:
+        var: var_4.stdout

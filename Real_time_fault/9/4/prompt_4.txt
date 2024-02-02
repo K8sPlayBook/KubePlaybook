@@ -1,0 +1,1 @@
+Use kubectl command to implement a connection pooling mechanism  to help  manage and reuse database connections, preventing overhead for deployment ‘web’ and namespace "robot-shop" that uses host "k8s_nodes", and display the deployment details in JSON format.

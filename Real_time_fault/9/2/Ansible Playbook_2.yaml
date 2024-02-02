@@ -1,0 +1,27 @@
+---
+- name: K8s deployment update playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Check if deployment 'web' exists in the namespace 'robot-shop'
+      shell: |
+        kubectl get deployments --namespace robot-shop | grep web
+      register: var_1
+
+    - name: Identify resource-intensive database queries
+      shell: |
+        kubectl logs deployment/web -n robot-shop | grep "query"
+      register: var_2
+
+    - name: Display the logs
+      debug:
+        var: var_2.stdout
+
+    - name: Get deployment details
+      shell: |
+        kubectl get deployment web -o json --namespace robot-shop
+      register: var_3
+
+    - name: Display deployment details
+      debug:
+        var: var_3.stdout

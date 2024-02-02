@@ -1,0 +1,23 @@
+---
+- name: K8s deployment scaling playbook
+  hosts: k8s_nodes
+  gather_facts: false
+  tasks:
+    - name: Check if deployment 'web' exists in namespace 'robot-shop'
+      shell: |
+        kubectl get deployments -n robot-shop | grep web
+      register: var_1
+
+    - name: Scale deployment if it exists
+      shell: |
+        kubectl scale --replicas=5 deployment/web -n robot-shop
+      when: "'web' in var_1.stdout"
+
+    - name: Get updated deployment details
+      shell: |
+        kubectl get deployment -o json --namespace robot-shop web
+      register: var_2
+
+    - name: Display updated deployment details
+      debug:
+        var: var_2.stdout

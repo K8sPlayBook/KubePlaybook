@@ -1,0 +1,1 @@
+Identify resource-intensive database queries for holding connections open for longer durations
