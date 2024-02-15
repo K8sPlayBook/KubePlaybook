@@ -1,8 +1,6 @@
 # KubePlaybook
 Ansible playbook repository for Kubernetes (K8s)
 
-# Ansible Playbook Generation with GPT-4
-
 This repository contains Ansible playbooks,  a dataset featuring 130 Ansible playbooks accompanied by natural language(NL) prompts designed for code generation. NL prompts, serving as queries or descriptions in natural language, instruct LLMs to generate task-specific code. The playbooks are designed to automate deployment tasks, ensuring reliability and efficiency in real-world production environments. Ansible playbooks are classified into three primary categories, each comprising pairs of playbooks and corresponding NL prompts. These categories encompass essential K8s commands, Ansible Galaxy and GitHub integration, and playbook for mitigating chaos-engineered operational faults.
 
 ## Evaluation Process
