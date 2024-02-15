@@ -14,10 +14,8 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
 1. Clone this repository:
    
 
-         git clone https://github.com/your-username/ansible-gpt4-playbooks.git
+         git clone https://github.com/K8sPlayBook/KubePlaybook.git
 
-
-         cd ansible-gpt4-playbooks
 
 2. Install Ansible and required dependencies:
 
