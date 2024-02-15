@@ -73,3 +73,8 @@ We would like to thank and acknowledge the developers of Robot-shop and QOTD for
 
 
 For more detailed instructions, refer to the paper[yet to publish).
+
+## Citing KubePlaybook
+Yet to publish
+
+BibTex:
