@@ -1,1 +1,3 @@
 *.yaml linguist-detectable=True
+*ansible-playbook linguist-detectable=True
+
