@@ -41,6 +41,12 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
 4. Run the Ansible playbooks:
    
          ansible-playbook -i hosts.ini playbook.yml
+   
+5. Few-shot learning
+
+      To utilize the dataset for few-shot learning or in-context tuning of Large Language Models (LLMs), follow these steps:
+
+      1. **Download the Dataset**: Obtain the dataset containing prompts in a text file and corresponding Ansible playbooks in YAML format. Ensure the file structure maintains a clear mapping between the prompts and their respective playbooks.
 
 ## Acknowledgments
 
