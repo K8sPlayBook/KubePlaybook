@@ -42,12 +42,12 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
    
          ansible-playbook -i hosts.ini playbook.yml
    
-5. Few-shot learning
+## Usage of Dataset for Few-Shot Learning or In-context tuning
 
-      To utilize the dataset for few-shot learning or in-context tuning of Large Language Models (LLMs), follow these steps:
+   To utilize the dataset for few-shot learning or in-context tuning of Large Language Models (LLMs), follow these steps:
 
-      1. **Download the Dataset**: Obtain the dataset containing prompts in a text file and corresponding Ansible playbooks in YAML format. Ensure the file structure maintains a clear mapping between the prompts and their respective playbooks.
-      2. **Fine-Tuning the LLM**: Use the provided prompts and corresponding Ansible playbooks for fine-tuning your preferred LLM, such as GPT-4. You can use libraries like Hugging Face's `transformers` to perform fine-tuning. Follow the instructions provided by the library for fine-tuning LLMs using your dataset. For example:
+   1. **Download the Dataset**: Obtain the dataset containing prompts in a text file and corresponding Ansible playbooks in YAML format. Ensure the file structure maintains a clear mapping between the prompts and their respective playbooks.
+   2. **In-context-Tuning the LLM**: Use the provided prompts and corresponding Ansible playbooks for In-context-tuning your preferred LLM, such as GPT-4. You can use libraries like Hugging Face's 'transformers' to perform In-context-tuning. Follow the instructions provided by the library for In-context-tuning LLMs using your dataset. For example:
          
                Prompt:
                Write an Ansible playbook to retrieve a list of all deployments by running a shell command on Kubernetes nodes. Filter the results to only include the namespace and deployment name, and store them in two variables: 'deployment_name' and 'namespace'.
