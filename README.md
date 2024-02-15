@@ -24,14 +24,15 @@ microk8s.kubectl version
 
 3. Create a host file for the microservices:
 Example host file (hosts.ini):
+
 [local]
+
 localhost ansible_connection=local
 
 [k8s]
+
 ip-XXX-XX-X-XXX ansible_connection=local
 
-[k8s_nodes]
-ip-XXX-XX-XX-XXX
 
 4. Run the Ansible playbooks:
 ansible-playbook -i hosts.ini playbook.yml
@@ -41,4 +42,4 @@ ansible-playbook -i hosts.ini playbook.yml
 We would like to thank and acknowledge the developers of Robot-shop and QoTD for their valuable contributions to the testing environment.
 
 
-For more detailed instructions and customization options, refer to the paper[yet to publish).
+For more detailed instructions, refer to the paper[yet to publish).
