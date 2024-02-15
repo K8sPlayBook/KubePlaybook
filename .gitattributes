@@ -1,2 +1,2 @@
 *.yaml linguist-detectable=True
-*.py linguist-detectable=True
+*.txt linguist-detectable=True
