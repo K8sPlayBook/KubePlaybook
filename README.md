@@ -28,11 +28,11 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
 
          microk8s.kubectl version
 
-3. Install sample microservice application
+3. Install sample microservice application:
 
    1. Robotshop: https://github.com/instana/robot-shop/blob/master/README.md
       
-   2. QOTD:
+   2. QOTD: https://github.com/redhat-developer-demos/qotd/blob/master/README.md
 
 4. Create a host file for the microservices:
    
