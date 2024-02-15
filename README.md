@@ -65,7 +65,7 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
 
 ## Acknowledgments
 
-We would like to thank and acknowledge the developers of Robot-shop and QoTD for their valuable contributions to the testing environment.
+We would like to thank and acknowledge the developers of Robot-shop and QOTD for their valuable contributions to the testing environment.
 
 
 For more detailed instructions, refer to the paper[yet to publish).
