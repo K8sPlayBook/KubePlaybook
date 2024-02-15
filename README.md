@@ -12,17 +12,25 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
 ## Installation and Usage
 
 1. Clone this repository:
+   
 
 git clone https://github.com/your-username/ansible-gpt4-playbooks.git
+
+
 cd ansible-gpt4-playbooks
 
 2. Install Ansible and required dependencies:
+
+   
 pip install ansible
+
 snap install microk8s --classic
+
 microk8s.kubectl version
 
 
-3. Create a host file for the microservices:
+4. Create a host file for the microservices:
+   
 Example host file (hosts.ini):
 
 [local]
@@ -35,6 +43,7 @@ ip-XXX-XX-X-XXX ansible_connection=local
 
 
 4. Run the Ansible playbooks:
+   
 ansible-playbook -i hosts.ini playbook.yml
 
 ## Acknowledgments
