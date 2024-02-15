@@ -28,6 +28,11 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
 
          microk8s.kubectl version
 
+3. Install sample microservice application
+
+   1. Robotshop:
+      
+   2. QOTD:
 
 4. Create a host file for the microservices:
    
