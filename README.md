@@ -1,2 +1,44 @@
 # KubePlaybook
 Ansible playbook repository for Kubernetes
+
+# Ansible Playbook Generation with GPT-4
+
+This repository contains Ansible playbooks,  a dataset featuring 130 Ansible playbooks accompanied by natural language(NL) prompts designed for code generation. NL prompts, serving as queries or descriptions in natural language, instruct LLMs to generate task-specific code. The playbooks are designed to automate deployment tasks, ensuring reliability and efficiency in real-world production environments.
+
+## Evaluation Process
+
+Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Robot-shop and QoTD. We validated both syntactic correctness and functional soundness during this phase, focusing on the effectiveness of automated deployment.
+
+## Installation and Usage
+
+1. Clone this repository:
+
+git clone https://github.com/your-username/ansible-gpt4-playbooks.git
+cd ansible-gpt4-playbooks
+
+2. Install Ansible and required dependencies:
+pip install ansible
+snap install microk8s --classic
+microk8s.kubectl version
+
+
+3. Create a host file for the microservices:
+Example host file (hosts.ini):
+[local]
+localhost ansible_connection=local
+
+[k8s]
+ip-XXX-XX-X-XXX ansible_connection=local
+
+[k8s_nodes]
+ip-XXX-XX-XX-XXX
+
+4. Run the Ansible playbooks:
+ansible-playbook -i hosts.ini playbook.yml
+
+## Acknowledgments
+
+We would like to thank and acknowledge the developers of Robot-shop and QoTD for their valuable contributions to the testing environment.
+
+
+For more detailed instructions and customization options, refer to the paper[yet to publish).
