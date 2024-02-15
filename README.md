@@ -30,7 +30,7 @@ Testing occurred on a t2.2xlarge EC2 instance with Ubuntu, where we installed Ro
 
 3. Install sample microservice application
 
-   1. Robotshop:
+   1. Robotshop: https://github.com/instana/robot-shop/blob/master/README.md
       
    2. QOTD:
 
