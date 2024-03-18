@@ -1,7 +1,6 @@
 # KubePlaybook
 
-![example event parameter](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=push)
-
+[![DOI](https://zenodo.org/badge/632548546.svg)](https://zenodo.org/doi/10.5281/zenodo.10833401)
 
 Ansible playbook repository for Kubernetes (K8s)
 
